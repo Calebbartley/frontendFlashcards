@@ -36,5 +36,6 @@
         "!Select sequence",
         "!Split",
         "!Split sequence"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }
