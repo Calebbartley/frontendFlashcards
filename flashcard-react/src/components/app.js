@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TitleBar from './TitleBar/titleBar';
-// import Deck from './Deck/deck';
-import Cards from './Cards/cards'
+import Deck from './Deck/deck';
+// import Cards from './card/Card'
 import axios from 'axios';
 
 
@@ -11,12 +11,12 @@ class App extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.state ={
             cards: [{
-                id:1,
+                id:'',
                 title:"",
                 definition:"",
             }],
             deck: [{
-              id:1,
+              id:0,
               category:"",
               flashCards: "",
             }],
@@ -40,10 +40,10 @@ class App extends Component{
 
       async makeGetRequest() {
         try {
-          let response = await axios.get("http://localhost:5000/api/cards");
+          let response = await axios.get("http://localhost:5000/api/decks");
           console.log(response.data);
           this.setState({
-            cards: response.data,
+            decks: response.data,
           });
         } catch (ex) {
           console.log(`error in api call`);
@@ -55,28 +55,33 @@ class App extends Component{
 
         return(
             <div className="App">
-              <h1> Cards </h1>
-              <form>
-                <TitleBar/>
-                <input
-                className="input" value={cardCycle} onChange={this.handleChange}
-                />
-                <Cards card={this.state.cards}/>
-                <ul>
-                  { this.state.deck.filter((card) => card.flashCards === this.state.cardCycle).map((card) => <li key={card.id}><strong>Category: </strong>{card.Category}<strong>Flash Cards: </strong>{card.flashCards}</li>) }
-                  { this.state.deck.filter((card) => card.category === this.state.cardCycle).map((card) => <li key={card.id}><strong>Category: </strong> {card.Category}<strong>Flash Cards: </strong>{card.flashCards}</li>)}
+              <h1> Decks </h1>
 
-                </ul>
-              <cards/>
-              </form>
-            </div>
+              <div>
+                <TitleBar/>
+                  { this.state.deck.filter((deck) => deck.category === this.state.cardCycle).map((deck) => <ol key={deck.id}> {deck.category } {deck.flashCards}</ol>)}
+                  { this.state.deck.filter((deck) => deck.flashCards === this.state.cardCycle).map((deck) => <ol key={deck.id}><p>{deck.category }</p> <p>{deck.flashCards}</p></ol>)}
+                <Deck deck={this.state.deck}/>
+                  {this.state.cards.filter((Cards) => Cards.title === this.state.cards).map((cards) => <li key={cards.id}>{cards.title}{cards.flashCards}</li>)}
+                  {this.state.cards.filter((Cards) => Cards.definition === this.state.cards).map((cards) => <li key={cards.id}>{cards.definition}{cards.flashCards}</li>)}
+                <input className="input" value={cardCycle} onChange={this.handleChange}/>
+              </div>
+
+
+
+             </div>
+
+
+
         )
-              }
-            }
-            
+      }
+
+
+}
+
             export default App;
 
-            // { this.state.deck.filter((deck) => deck.category === this.state.cardCycle).map((deck) => <li key={deck.id}><strong>Category: </strong> {deck.Category}<strong>Flash Cards: </strong>{deck.flashCards}</li>)}
-            // { this.state.deck.filter((deck) => deck.flashCards === this.state.cardCycle).map((deck) => <li key={deck.id}><strong>Category: </strong>{deck.Category}<strong>Flash Cards: </strong>{deck.flashCards}</li>) }
-            // <Deck deck={this.state.deck}/>
 
+            // { this.state.cards.filter((Cards) => Cards.title === this.state.cards).map((cards) => <li key={cards.id}><strong>Category: </strong>{cards.title}<strong>Flash Cards: </strong>{cards.flashCards}</li>) }
+            // { this.state.cards.filter((Cards) => Cards.definition === this.state.cards).map((cards) => <li key={cards.id}><strong>Category: </strong> {cards.definition}<strong>Flash Cards: </strong>{cards.flashCards}</li>)}
+//  <Cards/>

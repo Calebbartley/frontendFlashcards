@@ -10,17 +10,19 @@ export default class Cards extends React.Component{
 
     componentDidMount(){
 
-          axios.get(`http://localhost:5000/api/cards`).then(res =>{
+          axios.get(`http://localhost:5000/api/decks`)
+            .then(res =>{
               console.log(res)
               this.setState({cards: res.data})
           })
-    } 
+    }
 
     render() {
         return(
-            <ul>
+            <div>
             {this.state.cards.map(cards => <li>{cards.id}</li>)}
-            </ul>
+            </div>
+
         )
     }
 }

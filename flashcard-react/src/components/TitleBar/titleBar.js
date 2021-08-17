@@ -5,7 +5,7 @@ function TitleBar(props) {
     <div className="row row-spacer">
         <div className="col-md-12">
             <div>
-                <h1>FLASH CARDS</h1>
+                <h1>Animal Decks</h1>
             </div>
         </div>
     </div>
